@@ -4,7 +4,7 @@
 #include <ctime>
 
 int main() {
-    srand((unsigned int) time(0));
+    srand(42);
 
     int n = 5;
 
@@ -22,11 +22,12 @@ int main() {
     // and avoid narrowing compilation errors
     double total;
     int k = 0;
+    double error;
 
     std::cout << "Value of A \n" << A << "\n";
     std::cout << "Value of actual solution\n" << x_original << "\n";
 
-    while (k < 100) {
+    while (k < 20) {
         x_0 = x_1;
 
         for (int i = 0; i < n; ++i){ // Iterate on rows
@@ -40,6 +41,15 @@ int main() {
             x_1[i] = (b[i] - total) / A(i, i);
         }   
         ++k;
+
+                //if(k%10 == 0){
+            error = 0;
+            for (int x = 0; x < n; ++x){
+                error = error + x_1[x] * x_1[x];
+            }
+            std::cout << "Error after " << k << " iterations: " << error << "\n";
+        //}
+
     }
     std::cout << "Value of proposed solution after " << k << " iterations: \n" << x_1 << "\n";
 
